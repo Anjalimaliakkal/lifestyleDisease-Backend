@@ -4,6 +4,7 @@ const cors = require("cors")
 const bcrypt = require("bcrypt")
 const { patientsmodel } = require("./models/patient")
 const jwt = require("jsonwebtoken")
+const { resultsmodel } = require("./models/result")
 const app = express()
 app.use(cors())
 app.use(express.json())
@@ -51,6 +52,24 @@ app.post("/signIn", (req, res) => {
             }
         }
     ).catch()
+})
+
+app.post("/AddResult", (req, res) => {
+    let input = req.body
+    console.log(input)
+    let result = new resultsmodel(input)
+    result.save()
+    res.json({ "status": "success" })
+})
+
+app.get("/ViewAllResults", (req, res) => {
+    patientsmodel.find().then(
+        (data) => {
+            res.json(data)
+        }
+    ).catch((error) => {
+        res.json(error)
+    })
 })
 
 app.listen(8080, () => {
