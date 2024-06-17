@@ -24,3 +24,7 @@ app.post("/signUp", async (req, res) => {
     patient.save()
     res.json({ "status": "success" })
 })
+
+app.listen(8080, () => {
+    console.log("server started")
+})
