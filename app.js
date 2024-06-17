@@ -5,6 +5,8 @@ const bcrypt = require("bcrypt")
 const { patientsmodel } = require("./models/patient")
 const jwt = require("jsonwebtoken")
 const { resultsmodel } = require("./models/result")
+const { prescriptionsmodel } = require("./models/prescription")
+const { feedbacksmodel } = require("./models/feedback")
 const app = express()
 app.use(cors())
 app.use(express.json())
@@ -70,6 +72,27 @@ app.get("/ViewAllResults", (req, res) => {
     ).catch((error) => {
         res.json(error)
     })
+})
+
+app.post("/searchprescription", (req, res) => {
+    let input = req.body
+    prescriptionsmodel.find(input).then(
+        (data) => {
+            res.json(data)
+        }
+    ).catch(
+        (error) => {
+            res.json(error)
+        }
+    )
+})
+
+app.post("/AddFeedback", (req, res) => {
+    let input = req.body
+    console.log(input)
+    let feedback = new feedbacksmodel(input)
+    feedback.save()
+    res.json({ "status": "success" })
 })
 
 app.listen(8080, () => {
