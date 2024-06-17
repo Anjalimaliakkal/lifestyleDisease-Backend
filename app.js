@@ -72,6 +72,27 @@ app.get("/ViewAllResults", (req, res) => {
     })
 })
 
+app.post("/searchprescription", (req, res) => {
+    let input = req.body
+    prescriptionsmodel.find(input).then(
+        (data) => {
+            res.json(data)
+        }
+    ).catch(
+        (error) => {
+            res.json(error)
+        }
+    )
+})
+
+app.post("/AddFeedback", (req, res) => {
+    let input = req.body
+    console.log(input)
+    let feedback = new feedbacksmodel(input)
+    feed.save()
+    res.json({ "status": "success" })
+})
+
 app.listen(8080, () => {
     console.log("server started")
 })
