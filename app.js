@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt")
 const { patientsmodel } = require("./models/patient")
 const jwt = require("jsonwebtoken")
 const { resultsmodel } = require("./models/result")
+const { doctorsmodel } = require("./models/doctoradd")
 const app = express()
 app.use(cors())
 app.use(express.json())
@@ -92,6 +93,17 @@ app.post("/AddFeedback", (req, res) => {
     feed.save()
     res.json({ "status": "success" })
 })
+//signup doctor
+app.post("/dsignup",async(req,res)=>{
+    let input=req.body
+    let hashPassword=await generateHashedPassword(input.dpassword)
+    console.log(hashPassword)
+    input.dpassword=hashPassword
+    let doctoradd=new doctorsmodel(input)
+    doctoradd.save()
+    res.json({"status":"success"})
+})
+
 
 app.listen(8080, () => {
     console.log("server started")
