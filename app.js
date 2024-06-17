@@ -105,6 +105,32 @@ app.post("/dsignup",async(req,res)=>{
 })
 
 
+//signin doctor
+app.post("/dsignin",(req,res)=>{
+    let input=req.body
+    doctorsmodel.find({"dmail":req.body.dmail}).then((response)=>{
+        if (response.length>0) {
+            let dbdPassword=response[0].dpassword
+            console.log(dbdPassword)
+            bcrypt.compare(input.dpassword,dbdPassword,(error,isMatch)=>{
+                if (isMatch) {
+                    jwt.sign({email:input.dmail},"doctor-app",{expiresIn:"1d"},(error,token)=>{
+                      if (error) {
+                        res.json({"status":"unabel to create token"})
+                      } else {
+                       res.json({"status":"success","userId":response[0]._id,"token":token}) 
+                      }  
+                    })
+                } else {
+                    res.json({"status":"incorrect password"})
+                }
+            })
+        } else {
+            res.json({"status":"user not found"})
+        }
+    }).catch()
+})
+
 app.listen(8080, () => {
     console.log("server started")
 })
