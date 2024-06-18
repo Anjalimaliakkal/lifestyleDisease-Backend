@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken")
 const { resultsmodel } = require("./models/result")
 const { doctorsmodel } = require("./models/doctoradd")
 const { prescriptionsmodel } = require("./models/prescription")
+const { feedbacksmodel } = require("./models/feedback")
 const app = express()
 app.use(cors())
 app.use(express.json())
@@ -73,6 +74,18 @@ app.get("/ViewAllResults", (req, res) => {
         res.json(error)
     })
 })
+
+app.get("/viewfeedback",(req,res)=>{
+  feedbacksmodel.find().then(
+    (data)=>{
+        res.json(data)
+    }
+  ).catch((error)=>{
+
+    res.json(error)
+  })  
+})
+
 
 app.post("/AddPrescription",(req,res)=>{
     let input=req.body
