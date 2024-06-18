@@ -6,6 +6,7 @@ const { patientsmodel } = require("./models/patient")
 const jwt = require("jsonwebtoken")
 const { resultsmodel } = require("./models/result")
 const { doctorsmodel } = require("./models/doctoradd")
+const { prescriptionsmodel } = require("./models/prescription")
 const app = express()
 app.use(cors())
 app.use(express.json())
@@ -71,6 +72,14 @@ app.get("/ViewAllResults", (req, res) => {
     ).catch((error) => {
         res.json(error)
     })
+})
+
+app.post("/AddPrescription",(req,res)=>{
+    let input=req.body
+    console.log(input)
+    let prescription=new prescriptionsmodel(input)
+    prescription.save()
+    res.json({"status":"success"})
 })
 
 app.post("/searchprescription", (req, res) => {
