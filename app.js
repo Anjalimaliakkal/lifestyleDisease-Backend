@@ -95,6 +95,18 @@ app.post("/searchprescription", (req, res) => {
     )
 })
 
+app.post("/searchresult",(req,res)=>{
+    let input=req.body
+    resultsmodel.find(input).then(
+        (data)=>{
+            res.json(data)
+        }
+    ).catch((error)=>{
+        res.json(error)
+    })
+})
+
+
 app.post("/AddFeedback", (req, res) => {
     let input = req.body
     console.log(input)
