@@ -5,9 +5,9 @@ const bcrypt = require("bcrypt")
 const { patientsmodel } = require("./models/patient")
 const jwt = require("jsonwebtoken")
 const { resultsmodel } = require("./models/result")
-const { doctorsmodel } = require("./models/doctoradd")
 const { prescriptionsmodel } = require("./models/prescription")
 const { feedbacksmodel } = require("./models/feedback")
+const { doctorsmodel } = require("./models/doctoradd")
 const app = express()
 app.use(cors())
 app.use(express.json())
@@ -75,27 +75,7 @@ app.get("/ViewAllResults", (req, res) => {
     })
 })
 
-app.get("/viewfeedback",(req,res)=>{
-  feedbacksmodel.find().then(
-    (data)=>{
-        res.json(data)
-    }
-  ).catch((error)=>{
-
-    res.json(error)
-  })  
-})
-
-
-app.post("/AddPrescription",(req,res)=>{
-    let input=req.body
-    console.log(input)
-    let prescription=new prescriptionsmodel(input)
-    prescription.save()
-    res.json({"status":"success"})
-})
-
-app.post("/searchprescription", (req, res) => {
+app.post("/Searchprescription", (req, res) => {
     let input = req.body
     prescriptionsmodel.find(input).then(
         (data) => {
@@ -108,25 +88,14 @@ app.post("/searchprescription", (req, res) => {
     )
 })
 
-app.post("/searchresult",(req,res)=>{
-    let input=req.body
-    resultsmodel.find(input).then(
-        (data)=>{
-            res.json(data)
-        }
-    ).catch((error)=>{
-        res.json(error)
-    })
-})
-
-
 app.post("/AddFeedback", (req, res) => {
     let input = req.body
     console.log(input)
     let feedback = new feedbacksmodel(input)
-    feed.save()
+    feedback.save()
     res.json({ "status": "success" })
 })
+
 //signup doctor
 app.post("/dsignup",async(req,res)=>{
     let input=req.body
@@ -164,6 +133,48 @@ app.post("/dsignin",(req,res)=>{
         }
     }).catch()
 })
+
+app.get("/viewfeedback",(req,res)=>{
+    feedbacksmodel.find().then(
+      (data)=>{
+          res.json(data)
+      }
+    ).catch((error)=>{
+  
+      res.json(error)
+    })  
+  })
+  
+  
+  app.post("/AddPrescription",(req,res)=>{
+      let input=req.body
+      console.log(input)
+      let prescription=new prescriptionsmodel(input)
+      prescription.save()
+      res.json({"status":"success"})
+  })
+
+  app.post("/searchresult",(req,res)=>{
+    let input=req.body
+    resultsmodel.find(input).then(
+        (data)=>{
+            res.json(data)
+        }
+    ).catch((error)=>{
+        res.json(error)
+    })
+})
+app.get("/viewpatient",(req,res)=>{
+    patientsmodel.find().then(
+      (data)=>{
+          res.json(data)
+      }
+    ).catch((error)=>{
+  
+      res.json(error)
+    })  
+  })
+  
 
 app.listen(8080, () => {
     console.log("server started")
