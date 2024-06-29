@@ -10,7 +10,6 @@ const schema = mongoose.Schema(
         "disease": { type: String, required: true },
         "diaganosis": { type: String, required: true },
         "password": { type: String, required: true },
-        "confirmpassword": { type: String, required: true },
         "relativename": { type: String, required: true },
         "relation": { type: String, required: true },
         "relativeaddress": { type: String, required: true },
