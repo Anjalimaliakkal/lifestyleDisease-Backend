@@ -8,7 +8,7 @@ const schema = mongoose.Schema(
         "age": { type: String, required: true },
         "bloodgrp": { type: String, required: true },
         "disease": { type: String, required: true },
-        "diaganosis": { type: String, required: true },
+        "diagnosis": { type: String, required: true },
         "password": { type: String, required: true },
         "relativename": { type: String, required: true },
         "relation": { type: String, required: true },
